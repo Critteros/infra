@@ -21,15 +21,42 @@ inputs = {
   # Control plane configuration
   control_plane = [
     {
-      hostname = "rcp-0"
+      hostname = "kcp-0"
       ip_cidr  = "10.80.50.1/16"
     },
     {
-      hostname = "rcp-1"
+      hostname = "kcp-1"
       ip_cidr  = "10.80.50.2/16"
     }
   ]
   control_plane_cpu_cores = 2
   control_plane_memory    = 2048
   control_plane_disk_size = "30G"
+
+  # Worker configuration
+  workers = [
+    {
+      hostname = "kwp-0"
+      ip_cidr  = "10.80.60.1/16"
+    },
+    {
+      hostname = "kwp-1"
+      ip_cidr  = "10.80.60.2/16"
+    },
+    {
+      hostname = "kwp-2"
+      ip_cidr  = "10.80.60.3/16"
+    },
+    {
+      hostname = "kwp-3"
+      ip_cidr  = "10.80.60.4/16"
+    },
+    {
+      hostname = "kwp-4"
+      ip_cidr  = "10.80.60.5/16"
+    }
+  ]
+  worker_cpu_cores = 2
+  worker_memory    = 2048
+  worker_disk_size = "20G"
 }

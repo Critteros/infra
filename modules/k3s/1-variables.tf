@@ -39,8 +39,8 @@ variable "control_plane" {
     hostname = string
     ip_cidr  = string
   }))
+  default = []
 }
-
 
 variable "control_plane_cpu_cores" {
   description = "Number of CPU cores for control plane instances"
@@ -56,6 +56,34 @@ variable "control_plane_memory" {
 
 variable "control_plane_disk_size" {
   description = "Disk size for control plane instances"
+  type        = string
+  default     = "60G"
+}
+
+# Workers configuration
+variable "workers" {
+  description = "Workers configuration"
+  type = list(object({
+    hostname = string
+    ip_cidr  = string
+  }))
+  default = []
+}
+
+variable "worker_cpu_cores" {
+  description = "Number of CPU cores for worker instances"
+  type        = number
+  default     = 2
+}
+
+variable "worker_memory" {
+  description = "Amount of memory for worker instances"
+  type        = number
+  default     = 2048
+}
+
+variable "worker_disk_size" {
+  description = "Disk size for worker instances"
   type        = string
   default     = "60G"
 }

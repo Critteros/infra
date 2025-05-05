@@ -1,5 +1,5 @@
-resource "proxmox_vm_qemu" "control_plane" {
-  for_each      = { for idx, host in var.control_plane : host.hostname => host }
+resource "proxmox_vm_qemu" "workers" {
+  for_each      = { for idx, host in var.workers : host.hostname => host }
   target_node   = var.target_node
   clone_id      = var.template_id
   full_clone    = false
@@ -10,8 +10,8 @@ resource "proxmox_vm_qemu" "control_plane" {
   agent = 1
 
   # VM Configuration
-  cores    = var.control_plane_cpu_cores
-  memory   = var.control_plane_memory
+  cores    = var.worker_cpu_cores
+  memory   = var.worker_memory
   scsihw   = "virtio-scsi-pci"
   bootdisk = "scsi0"
   cpu_type = "host"
@@ -47,7 +47,7 @@ resource "proxmox_vm_qemu" "control_plane" {
     virtio {
       virtio0 {
         disk {
-          size    = var.control_plane_disk_size
+          size    = var.worker_disk_size
           storage = var.vm_disk_storage
           backup  = false
         }
