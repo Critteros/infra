@@ -2,14 +2,27 @@ include "root" {
   path = find_in_parent_folders("root.hcl")
 }
 
+include "secrets" {
+  path           = find_in_parent_folders("secrets.hcl")
+  expose         = true
+  merge_strategy = "no_merge"
+}
+
+include "env" {
+  path           = find_in_parent_folders("env.hcl")
+  expose         = true
+  merge_strategy = "no_merge"
+}
+
 terraform {
   source = "${get_repo_root()}/modules/k3s"
 }
 
 inputs = {
   # Proxmox authentication
-  proxmox_host     = "pve.local.critteros.dev"
-  proxmox_token_id = "terraform-prov@pve!terraform"
+  proxmox_host         = include.env.locals.proxmox_host
+  proxmox_token_id     = include.env.locals.proxmox_token_id
+  proxmox_token_secret = include.secrets.locals.proxmox_token_secret
 
   # Proxmox host configuration
   template_id        = "9000"
