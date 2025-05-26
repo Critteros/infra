@@ -1,0 +1,4 @@
+{
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "ansible.python.interpreterPath": "/Users/szymon/dev/infra/.venv/bin/python"
+}
