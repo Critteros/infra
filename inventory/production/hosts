@@ -5,7 +5,7 @@ all:
       children:
         control_plane:
           hosts:
-            kcp-[0:1].k8s.homa-server.eu
+            kcp-[0:2].k8s.homa-server.eu
         worker_plane:
           hosts:
             kwp-[0:4].k8s.homa-server.eu

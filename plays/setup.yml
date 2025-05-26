@@ -2,6 +2,7 @@
 - name: Update apt packages and ensure qemu-guest-agent is installed
   hosts: all
   become: true
+  remote_user: root
   tasks:
     - name: Update apt cache
       ansible.builtin.apt:
