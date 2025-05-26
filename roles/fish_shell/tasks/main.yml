@@ -1,0 +1,52 @@
+---
+- name: Ensure fish is installed
+  become: true
+  ansible.builtin.package:
+    name: fish
+    state: present
+
+- name: Ensure git is installed
+  become: true
+  ansible.builtin.package:
+    name: git
+    state: present
+
+- name: Get path of fish shell binary
+  ansible.builtin.command: which fish
+  register: fish_shell_path
+  changed_when: false
+
+- name: Change default shell to fish for the user
+  become: true
+  ansible.builtin.user:
+    name: "{{ fish_shell_user }}"
+    shell: "{{ fish_shell_path.stdout }}"
+
+- name: Download Oh My Fish install script
+  become: true
+  become_user: "{{ fish_shell_user }}"
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
+    dest: /tmp/omf_install.fish
+    mode: "0755"
+
+- name: Get home directory for the user
+  ansible.builtin.command: getent passwd {{ fish_shell_user }}
+  register: fish_shell_user_passwd
+  changed_when: false
+
+- name: Set home directory fact
+  ansible.builtin.set_fact:
+    fish_shell_user_home: "{{ fish_shell_user_passwd.stdout.split(':')[5] }}"
+
+- name: Install Oh My Fish
+  become: true
+  become_user: "{{ fish_shell_user }}"
+  ansible.builtin.command: fish /tmp/omf_install.fish --noninteractive
+  args:
+    creates: "{{ fish_shell_user_home }}/.local/share/omf"
+  environment:
+    OMF_PATH: "{{ fish_shell_user_home }}/.local/share/omf"
+    OMF_CONFIG: "{{ fish_shell_user_home }}/.config/omf"
+  register: omf_install_result
+  failed_when: omf_install_result.rc != 0

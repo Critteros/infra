@@ -1,0 +1,3 @@
+# vars/main.yml for fish_shell role
+---
+fish_shell_user: ""

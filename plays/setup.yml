@@ -23,3 +23,9 @@
       vars:
         create_user_name: admin
         create_user_password: ""
+
+    - name: Set fish shell for admin user
+      ansible.builtin.import_role:
+        name: fish_shell
+      vars:
+        fish_shell_user: admin
