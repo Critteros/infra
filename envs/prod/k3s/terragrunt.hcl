@@ -39,6 +39,10 @@ inputs = {
     {
       hostname = "kcp-1"
       ip_cidr  = "10.80.50.2/16"
+    },
+    {
+      hostname = "kcp-2"
+      ip_cidr  = "10.80.50.3/16"
     }
   ]
   control_plane_cpu_cores = 2
