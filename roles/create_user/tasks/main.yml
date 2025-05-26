@@ -1,0 +1,43 @@
+---
+- name: Ensure user exists with provided name, password, and is in sudo group
+  ansible.builtin.user:
+    name: "{{ create_user_name }}"
+    password: "{{ create_user_password }}"
+    groups: sudo
+    append: true
+    shell: /bin/bash
+
+- name: Ensure .ssh directory exists for user
+  ansible.builtin.file:
+    path: "/home/{{ create_user_name }}/.ssh"
+    state: directory
+    owner: "{{ create_user_name }}"
+    group: "{{ create_user_name }}"
+    mode: "0700"
+  become: true
+  become_user: root
+
+- name: Copy root's authorized_keys to user
+  ansible.builtin.copy:
+    src: /root/.ssh/authorized_keys
+    dest: "/home/{{ create_user_name }}/.ssh/authorized_keys"
+    owner: "{{ create_user_name }}"
+    group: "{{ create_user_name }}"
+    mode: "0600"
+    remote_src: true
+    force: true
+  become: true
+  become_user: root
+
+- name: Allow user to use sudo without password (append and backup)
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/{{ create_user_name }}
+    line: "{{ create_user_name }} ALL=(ALL) NOPASSWD:ALL"
+    create: true
+    owner: root
+    group: root
+    mode: "0440"
+    backup: true
+    state: present
+  become: true
+  become_user: root

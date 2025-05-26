@@ -1,0 +1,4 @@
+---
+# Default variables for create_user role
+create_user_name: admin
+create_user_password: ''
