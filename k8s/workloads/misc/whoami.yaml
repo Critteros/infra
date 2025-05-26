@@ -46,9 +46,10 @@ kind: IngressRoute
 metadata:
   name: whoami
   namespace: misc
+  annotations:
+    kubernetes.io/ingress.class: traefik-private
 spec:
   entryPoints:
-    - web
     - websecure
   routes:
     - match: PathPrefix(`/whoami`)

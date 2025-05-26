@@ -1,1 +1,25 @@
 ---
+ports:
+  web:
+    # Redirect HTTP to HTTPS
+    redirections:
+      entryPoint: 
+        to: websecure 
+        scheme: https
+        pernament: true
+providers:
+  kubernetesGateway:
+    enabled: false
+  kubernetesIngress:
+    enabled: true
+    ingressClass: traefik-private
+  kubernetesCRD:
+    enabled: true
+    ingressClass: traefik-private
+ingressRoute:
+  dashboard:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik-private
+    entryPoints:
+      - websecure

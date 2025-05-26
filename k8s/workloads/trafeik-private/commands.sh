@@ -11,3 +11,6 @@ kubectl create namespace trafeik-private
 # Installation, to change replace install with upgrade
 helm install --namespace=trafeik-private \
     traefik-private traefik/traefik
+
+helm upgrade --namespace=trafeik-private \
+    traefik-private traefik/traefik -f trafeik-values.yaml
