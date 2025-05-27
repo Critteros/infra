@@ -30,3 +30,13 @@
         name: fish_shell
       vars:
         fish_shell_user: admin
+
+    - name: Check current Timezone
+      ansible.builtin.command: timedatectl show --property=Timezone --value
+      register: timezone_output
+      changed_when: false
+
+    - name: Configure Timezone to Europe/Warsaw
+      ansible.builtin.command: timedatectl set-timezone Europe/Warsaw
+      when: timezone_output.stdout != "Europe/Warsaw"
+      changed_when: true
