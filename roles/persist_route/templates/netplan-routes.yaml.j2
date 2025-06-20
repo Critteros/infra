@@ -1,0 +1,19 @@
+# This file is managed by Ansible - static routes for interfaces
+
+network:
+  version: 2
+  ethernets:
+{%- for iface, routes in persist_route_routes|groupby('interface') %}
+
+    {{ iface }}:
+{%- set iface_routes = routes | list %}
+{%- if iface_routes|length > 0 %}
+
+      routes:
+{%- for route in iface_routes %}
+
+        - to: {{ route.to }}
+          via: {{ route.via }}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}

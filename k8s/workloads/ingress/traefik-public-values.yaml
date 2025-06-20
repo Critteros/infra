@@ -1,0 +1,39 @@
+---
+# ports:
+  # web:
+  #   # Redirect HTTP to HTTPS
+  #   redirections:
+  #     entryPoint: 
+  #       to: websecure 
+  #       scheme: https
+  #       pernament: true
+providers:
+  kubernetesGateway:
+    enabled: false
+  kubernetesIngress:
+    enabled: true
+    ingressClass: traefik-public
+  kubernetesCRD:
+    enabled: true
+    ingressClass: traefik-public
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+    effect: "NoSchedule"
+nodeSelector:
+  node-role.kubernetes.io/control-plane: "true" # Ensure Traefik runs on control plane nodes
+service:
+  type: LoadBalancer
+  spec:
+    externalTrafficPolicy: Local # Preserve client IP
+    loadBalancerIP: 10.80.80.42  # Set a static IP for the LoadBalancer
+deployment:
+  kind: DaemonSet # Use DaemonSet to ensure Traefik runs on all control plane nodes
+image:
+  pullPolicy: Always
+  

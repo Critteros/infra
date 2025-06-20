@@ -9,3 +9,6 @@ all:
         worker_plane:
           hosts:
             kwp-[0:4].k8s.homa-server.eu
+    internal_networked:
+      children:
+        k8s:

@@ -1,0 +1,6 @@
+- name: Create persistent netplan config with routes
+  ansible.builtin.template:
+    src: netplan-routes.yaml.j2
+    dest: "{{ persist_route_netplan_file }}"
+    mode: "0600"
+  notify: Apply netplan

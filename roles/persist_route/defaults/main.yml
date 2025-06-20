@@ -1,0 +1,4 @@
+# List of route definitions
+persist_route_routes: []
+# File to write for netplan configuration
+persist_route_netplan_file: "/etc/netplan/99-persist-routes.yaml"
