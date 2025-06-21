@@ -36,6 +36,6 @@ deployment:
   kind: DaemonSet # Use DaemonSet to ensure Traefik runs on all control plane nodes
 image:
   pullPolicy: Always
-ingressRoute:
-  dashboard:
-    enabled: true
+additionalArguments: 
+  - "--api.insecure=true"  # Enable insecure API access
+  - "--api.dashboard=true" # Enable the dashboard
