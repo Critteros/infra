@@ -1,12 +1,12 @@
 ---
-# ports:
-  # web:
-  #   # Redirect HTTP to HTTPS
-  #   redirections:
-  #     entryPoint: 
-  #       to: websecure 
-  #       scheme: https
-  #       pernament: true
+ports:
+  web:
+    # Redirect HTTP to HTTPS
+    redirections:
+      entryPoint: 
+        to: websecure 
+        scheme: https
+        pernament: true
 providers:
   kubernetesGateway:
     enabled: false
