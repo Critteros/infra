@@ -27,12 +27,6 @@ resource "proxmox_vm_qemu" "workers" {
   network {
     id     = 0
     model  = "virtio"
-    bridge = "vmbr0"
-  }
-
-  network {
-    id     = 1
-    model  = "virtio"
     bridge = var.internal_interface
   }
 
@@ -56,10 +50,10 @@ resource "proxmox_vm_qemu" "workers" {
   }
 
   # Cloud-Init configuration
-  os_type   = "cloud-init"
-  boot      = "order=virtio0"
-  ipconfig0 = var.main_network_config
-  ipconfig1 = "ip=${each.value.ip_cidr}"
-  ciuser    = "root"
-  sshkeys   = file("./pub_keys.pub")
+  os_type    = "cloud-init"
+  boot       = "order=virtio0"
+  ipconfig0  = "ip=${each.value.ip_cidr},gw=${var.gateway_ip}"
+  nameserver = var.nameserver
+  ciuser     = "root"
+  sshkeys    = file("./pub_keys.pub")
 }

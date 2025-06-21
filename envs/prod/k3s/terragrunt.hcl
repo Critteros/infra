@@ -29,6 +29,8 @@ inputs = {
   internal_interface = "internalbr"
   target_node        = "pve"
   vm_disk_storage    = "local-zfs"
+  gateway_ip         = "10.80.0.1"
+  nameserver         = "1.1.1.1"
 
   # Control plane configuration
   control_plane = [

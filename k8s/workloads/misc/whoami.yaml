@@ -44,10 +44,29 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: whoami
+  name: whoami-public
   namespace: misc
   annotations:
     kubernetes.io/ingress.class: traefik-public
+spec:
+  entryPoints:
+    - websecure
+    - web
+  routes:
+    - match: PathPrefix(`/whoami`)
+      kind: Rule
+      services:
+        - name: whoami
+          namespace: misc
+          port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami-private
+  namespace: misc
+  annotations:
+    kubernetes.io/ingress.class: traefik-private
 spec:
   entryPoints:
     - websecure

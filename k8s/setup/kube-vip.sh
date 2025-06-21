@@ -13,7 +13,7 @@ mkdir -p /var/lib/rancher/k3s/server/manifests/
 
 kube-vip manifest daemonset \
 --arp \
---interface eth1 \
+--interface eth0 \
 --address 10.80.80.1 \
 --controlplane \
 --leaderElection \

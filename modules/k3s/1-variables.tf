@@ -4,10 +4,14 @@ variable "internal_interface" {
   type        = string
 }
 
-variable "main_interface" {
-  description = "Main network interface for egress"
+variable "gateway_ip" {
+  description = "Gateway IP address for the VMs"
   type        = string
-  default     = "vmbr0"
+}
+
+variable "nameserver" {
+  description = "Nameserver IP address for the VMs"
+  type        = string
 }
 
 variable "template_id" {
@@ -20,17 +24,10 @@ variable "target_node" {
   type        = string
 }
 
-variable "main_network_config" {
-  description = "Main network configuration in proxmox cloudinit format"
-  type        = string
-  default     = "ip=dhcp"
-}
-
 variable "vm_disk_storage" {
   description = "Storage used for VM disks"
   type        = string
 }
-
 
 # Control plane configuration
 variable "control_plane" {
