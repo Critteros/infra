@@ -1,0 +1,30 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: xrealip-from-cf
+  namespace: ingress
+spec:
+  plugin:
+    htransformation:
+      Rules:
+       - Name: "Set X-Real-Ip from Cf-Connecting-Ip header if it exists"
+         Header: "X-Real-Ip"
+         Value: ''
+         Type: "Set"
+
+       - Name: "Copy Cf-Connecting-Ip to X-Real-Ip"
+         Header: "X-Real-Ip"
+         HeaderPrefix: "^"
+         Sep: " "
+         Values:
+            - "^Cf-Connecting-Ip"
+         Type: 'Join'
+        
+       - Name: "Remove empty space"
+         Header: 'X-Real-Ip'
+         Value: ' (.*)'
+         ValueReplace: '$1'
+         Type: 'RewriteValueRule'
+
+

@@ -48,10 +48,12 @@ metadata:
   namespace: misc
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/hostname: whoami.critteros.dev
+    external-dns.alpha.kubernetes.io/target: k8s-ingress.homa-server.eu
 spec:
   ingressClassName: traefik-public
   rules:
-    - host: k8s-ingress.homa-server.eu
+    - host: whoami.critteros.dev
       http:
         paths:
           - path: /
@@ -63,8 +65,8 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - k8s-ingress.homa-server.eu
-      secretName: k8s-ingress-tls
+        - whoami.critteros.dev
+      secretName: whoami-critteros-dev-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

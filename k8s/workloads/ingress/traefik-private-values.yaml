@@ -39,7 +39,3 @@ image:
 ingressRoute:
   dashboard:
     enabled: true
-    annotations:
-      kubernetes.io/ingress.class: traefik-private
-    entryPoints:
-      - websecure
