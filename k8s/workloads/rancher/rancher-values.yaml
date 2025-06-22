@@ -1,0 +1,13 @@
+---
+hostname: rancher.critteros.dev
+ingress:
+  tls:
+    source: letsEncrypt
+  extraAnnotations:
+    kubernetes.io/ingress.class: traefik-public
+letsEncrypt:
+  email: szymonkoziol3@gmail.com
+  ingress:
+    class: traefik-public
+privateCA: true
+replicas: 1

@@ -12,6 +12,6 @@ k3sup join \
   --ssh-key $HOME/.ssh/id_ed25519 \
   --server \
   --server-ip 10.80.80.1 \
-  --k3s-channel latest \
+  --k3s-version v1.32.5+k3s1 \
   --k3s-extra-args "--node-ip=$NODE_IP --tls-san 10.80.80.1 --tls-san k8s.homa-server.eu" \
   --no-extras
